@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AI Lead Bot</title>
+</head>
+<body>
+    <h2>Chat with Our IT Bot</h2>
+    <div id="chatbox"></div>
+    <input type="text" id="user-input" placeholder="Type here...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        async function sendMessage() {
+            let userMessage = document.getElementById("user-input").value;
+            let response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            });
+            let data = await response.json();
+            document.getElementById("chatbox").innerHTML += "<p>You: " + userMessage + "</p>";
+            document.getElementById("chatbox").innerHTML += "<p>Bot: " + data.response + "</p>";
+        }
+    </script>
+</body>
+</html>
